@@ -17,5 +17,9 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false
-  }
+  },
+  "include": [
+    "src/**/*.ts", // Include TypeScript source files
+    "typings/**/*.d.ts" // Include TypeScript declaration files
+  ]
 }

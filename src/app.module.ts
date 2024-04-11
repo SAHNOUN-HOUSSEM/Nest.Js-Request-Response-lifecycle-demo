@@ -1,7 +1,7 @@
 import { ConsoleLogger, MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { IsValidIdMiddleware } from './middlewares';
+import { AuthenticationMiddleware, IsValidIdMiddleware } from './middlewares';
 
 @Module({
   imports: [],
@@ -10,7 +10,11 @@ import { IsValidIdMiddleware } from './middlewares';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(IsValidIdMiddleware)
+    consumer
+      .apply(AuthenticationMiddleware)
+      .forRoutes("/protected", "/protected/*")
+      .apply(IsValidIdMiddleware)
+      .exclude("/protected")
       .forRoutes(
         { method: RequestMethod.GET, path: "/:id" }
       )
