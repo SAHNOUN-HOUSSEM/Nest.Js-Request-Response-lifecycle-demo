@@ -1,4 +1,6 @@
+import { Role } from "src/enums";
+
 export class User {
     username: string;
-    roles: ["admin" | "user"]
+    roles: Role[]
 }

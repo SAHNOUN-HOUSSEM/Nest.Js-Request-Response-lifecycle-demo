@@ -1,9 +1,10 @@
-import { Controller, Get, Param, Req } from '@nestjs/common';
+import { Controller, Get, Param, Req, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Request } from 'express';
 import { User } from './types';
 import { CurrentUser, Roles } from './decorators';
 import { Role } from './enums';
+import { RolesGuard } from './guards';
 
 @Controller()
 export class AppController {
@@ -31,12 +32,14 @@ export class AppController {
   }
 
   @Roles(Role.Admin)
+  // @UseGuards(RolesGuard)
   @Get("/protected/admin")
   admin() {
     return `hello, admin`
   }
 
   @Roles(Role.User)
+  // @UseGuards(RolesGuard)
   @Get("/protected/user")
   user() {
     return `hello, user`

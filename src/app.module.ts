@@ -2,11 +2,18 @@ import { ConsoleLogger, MiddlewareConsumer, Module, NestModule, RequestMethod } 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthenticationMiddleware, IsValidIdMiddleware } from './middlewares';
+import { RolesGuard } from './guards';
 
 @Module({
   imports: [],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: "APP_GUARD",
+      useClass: RolesGuard
+    }
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
