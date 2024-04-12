@@ -1,10 +1,12 @@
-import { Controller, Get, Param, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Req, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Request } from 'express';
 import { User } from './types';
 import { CurrentUser, Roles } from './decorators';
 import { Role } from './enums';
 import { RolesGuard } from './guards';
+import { UserDto } from './dtos';
+import { FreezePipe } from './pipes';
 
 @Controller()
 export class AppController {
@@ -43,6 +45,14 @@ export class AppController {
   @Get("/protected/user")
   user() {
     return `hello, user`
+  }
+
+  @Get("/protected/pipes")
+  pipe(
+    @Body(new FreezePipe()) userDto: UserDto
+  ) {
+    userDto.password = "ss"
+    return `pipe`
   }
 
   @Get('/:id')
