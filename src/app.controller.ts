@@ -2,7 +2,8 @@ import { Controller, Get, Param, Req } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Request } from 'express';
 import { User } from './types';
-import { CurrentUser } from './decorators';
+import { CurrentUser, Roles } from './decorators';
+import { Role } from './enums';
 
 @Controller()
 export class AppController {
@@ -27,6 +28,18 @@ export class AppController {
     @CurrentUser() user: User
   ) {
     return `protected route, hello, ${req.user.username}`
+  }
+
+  @Roles(Role.Admin)
+  @Get("/protected/admin")
+  admin() {
+    return `hello, admin`
+  }
+
+  @Roles(Role.User)
+  @Get("/protected/user")
+  user() {
+    return `hello, user`
   }
 
   @Get('/:id')
