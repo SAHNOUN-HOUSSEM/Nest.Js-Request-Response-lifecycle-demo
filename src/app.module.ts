@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthenticationMiddleware, IsValidIdMiddleware } from './middlewares';
 import { RolesGuard } from './guards';
+import { LoggingInterceptor } from './interceptors';
 
 @Module({
   imports: [],
@@ -12,6 +13,10 @@ import { RolesGuard } from './guards';
     {
       provide: "APP_GUARD",
       useClass: RolesGuard
+    },
+    {
+      provide: "APP_INTERCEPTOR",
+      useClass: LoggingInterceptor
     }
   ],
 })
