@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { AuthenticationMiddleware, IsValidIdMiddleware } from './middlewares';
 import { RolesGuard } from './guards';
 import { LoggingInterceptor } from './interceptors';
+import { AllExceptionsFilter } from './filters';
 
 @Module({
   imports: [],
@@ -17,6 +18,10 @@ import { LoggingInterceptor } from './interceptors';
     {
       provide: "APP_INTERCEPTOR",
       useClass: LoggingInterceptor
+    },
+    {
+      provide: "APP_FILTER",
+      useClass: AllExceptionsFilter
     }
   ],
 })
